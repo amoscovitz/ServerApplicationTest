@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerApplicationTest", "ServerApplicationTest.vcxproj", "{F73CE603-587A-4931-BC57-D3E2F4092A53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116} = {0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameServerLib", "GameServerLib\GameServerLib.vcxproj", "{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F73CE603-587A-4931-BC57-D3E2F4092A53}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F73CE603-587A-4931-BC57-D3E2F4092A53}.Debug|Win32.Build.0 = Debug|Win32
+		{F73CE603-587A-4931-BC57-D3E2F4092A53}.Release|Win32.ActiveCfg = Release|Win32
+		{F73CE603-587A-4931-BC57-D3E2F4092A53}.Release|Win32.Build.0 = Release|Win32
+		{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}.Debug|Win32.Build.0 = Debug|Win32
+		{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}.Release|Win32.ActiveCfg = Release|Win32
+		{0D498F85-DBE7-4565-A4E8-2EB7A0F6A116}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://supernono.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ServerApplicationTest.vcxproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = GameServerLib\\GameServerLib.vcxproj
+		SccProjectName2 = GameServerLib
+		SccLocalPath2 = GameServerLib
+	EndGlobalSection
+EndGlobal
