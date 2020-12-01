@@ -35,17 +35,14 @@ private:
 
 	int GenerateSessionId();
 
-	void SendHTTPResponse(http_response_code_t response_code, std::string payload, int socketid);
-//protected:
-
-	//RemoteNetworkView* m_RemoteNetworkView;
+	void SendHTTPResponse(http_response_code_t response_code, std::string payload);
 
 public:
 	SessionManager();
 
 	void CreateSession(IEventDataPtr pEventData);
 
-	void DeleteSession(IEventDataPtr pEventData);
+	void DeleteSession(int sessionid);
 
 	void PrintSessions();	
 
@@ -56,12 +53,9 @@ public:
 
 	void VOnUpdate();
 
-	//void SetRemoteNetworkView(RemoteNetworkView* rnv) { m_RemoteNetworkView = rnv; };
-
 	// Send event back to caller (Sent to socket)
-	//void ForwardEvent(IEventDataPtr pEventData);
+	void ForwardEvent(IEventDataPtr pEventData);
 
-	//void RemoveHTTPSocket(IEventDataPtr pEventData);
 };
 
 extern SessionManager* g_pSessionManager;

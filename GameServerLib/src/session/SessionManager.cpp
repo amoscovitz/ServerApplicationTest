@@ -3,9 +3,6 @@
 #include "../server/server.h"
 #include "../ThirdPart/FastDelegate.h"
 
-
-SessionManager* g_pSessionManager = NULL;
-
 SessionManager::SessionManager() {
 	g_pSessionManager = this;
 	for (int x = 0; x < MAX_SESSION; ++x) {
@@ -38,17 +35,26 @@ void SessionManager::CreateSession(IEventDataPtr pEventData) {
 
 	sstream << sessionid;
 	payload.append(sstream.str());
-	SendHTTPResponse(http_response_code_t::OK, payload, pEventData->VGetSocketId());
+	SendHTTPResponse(http_response_code_t::OK, payload);
 }
 
-void SessionManager::DeleteSession(IEventDataPtr pEventData) {
-	
-	std::string payload;
 
-	std::shared_ptr<EventData_EndSession> pCastEventData = std::static_pointer_cast<EventData_EndSession>(pEventData);
+void SessionManager::SendHTTPResponse(http_response_code_t response_code, std::string payload) {
+	char response[4];
+	std::string httpinmsg;
+	IEventDataPtr pResponseHttpEvent(CREATE_EVENT(EventData_ResponseHTTP::sk_EventType));
 
-	int sessionid = pCastEventData->VGetSessionId();
+	_itoa_s((int)response_code, response, _countof(response), 10);
+	httpinmsg.append(response);
+	httpinmsg.append(" ");
+	httpinmsg.append(payload);
 
+	std::istrstream in(httpinmsg.c_str(), httpinmsg.size());
+	pResponseHttpEvent->VDeserialize(in);
+	IEventManager::Get()->VTriggerEvent(pResponseHttpEvent);
+}
+
+void SessionManager::DeleteSession(int sessionid) {
 	for (int x = 0; x < MAX_SESSION; ++x) {
 		if (sessions.session[x] == sessionid) {
 			sessions.session[x] = 0;
@@ -56,7 +62,6 @@ void SessionManager::DeleteSession(IEventDataPtr pEventData) {
 			break;
 		}
 	}
-	SendHTTPResponse(http_response_code_t::OK, payload, pEventData->VGetSocketId());
 }
 
 void SessionManager::PrintSessions() {
@@ -72,23 +77,6 @@ int SessionManager::GenerateSessionId() {
 }
 
 void SessionManager::VOnInit() {
-	// register to listener to events CreateSession, EndSession
-	IEventManager::Get()->VAddListener(MakeDelegate(this, &SessionManager::CreateSession), EventData_CreateSession::sk_EventType);
-	IEventManager::Get()->VAddListener(MakeDelegate(this, &SessionManager::DeleteSession), EventData_EndSession::sk_EventType);
-}
-
-void SessionManager::SendHTTPResponse(http_response_code_t response_code, std::string payload, int socketid) {
-	char response[4];
-	std::string httpinmsg;
-	IEventDataPtr pResponseHttpEvent(CREATE_EVENT(EventData_ResponseHTTP::sk_EventType));
-
-	_itoa_s((int)response_code, response, _countof(response), 10);
-	httpinmsg.append(response);
-	httpinmsg.append(" ");
-	httpinmsg.append(payload);
-
-	std::istrstream in(httpinmsg.c_str(), httpinmsg.size());
-	pResponseHttpEvent->VSetSocketId(socketid);
-	pResponseHttpEvent->VDeserialize(in);
-	IEventManager::Get()->VTriggerEvent(pResponseHttpEvent);
+	// register to listener to events CreateSession
+	IEventManager::Get()->VAddListener(	MakeDelegate(this, &SessionManager::CreateSession), EventData_CreateSession::sk_EventType);
 }

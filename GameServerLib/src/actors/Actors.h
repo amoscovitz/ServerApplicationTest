@@ -4,6 +4,8 @@
 #include "../misc/GameCodeStd.h"
 #include "../server/event.h"
 
+//TODO Create an IActor !!!!
+
 class Actor;
 
 typedef std::shared_ptr<Actor> StrongActorPtr;
@@ -77,6 +79,7 @@ extern ActorManager *g_pActorManager;
 
 class RemoteNetworkView {
 protected:
+	// actorManager instance
 	ActorManager* m_ActorManager;
 	
 public:
