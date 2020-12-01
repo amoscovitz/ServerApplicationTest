@@ -348,16 +348,59 @@ class EventData_AddPlayer : public BaseEventData {
 	friend BaseEventData;
 public:
 	static const EventType sk_EventType;
+	
+	virtual const char* GetName(void) const {
+		return "EventData_AddPlayer";
+	}
+
+	virtual const EventType& VGetEventType(void) const { return sk_EventType; }
+
+	virtual IEventDataPtr VCopy(void) const {
+		return IEventDataPtr(GCC_NEW EventData_AddPlayer());
+	}
 };
 
 class EventData_EndSession : public BaseEventData {
 	friend BaseEventData;
+protected:
+	int m_sessionId;
+
 public:
 	static const EventType sk_EventType;
+
+	virtual const int VGetSessionId() { return m_sessionId; }
+
+	virtual void VDeserialize(std::istrstream& in) {
+		in >> m_sessionId;
+	}
+
+	virtual void VSerialize(std::ostrstream& out) const {
+		out << m_sessionId;
+	}
+
+	virtual const char* GetName(void) const {
+		return "EventData_EndSession";
+	}
+
+	virtual const EventType& VGetEventType(void) const { return sk_EventType; }
+
+	virtual IEventDataPtr VCopy(void) const {
+		return IEventDataPtr(GCC_NEW EventData_EndSession());
+	}
 };
 
 class EventData_SessionActive : public BaseEventData {
 	friend BaseEventData;
 public:
 	static const EventType sk_EventType;
+
+	virtual const char* GetName(void) const {
+		return "EventData_SessionActive";
+	}
+
+	virtual const EventType& VGetEventType(void) const { return sk_EventType; }
+
+	virtual IEventDataPtr VCopy(void) const {
+		return IEventDataPtr(GCC_NEW EventData_SessionActive());
+	}
 };

@@ -42,6 +42,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	rnView->VOnInit();
 
 	SessionManager* sessionManager = GCC_NEW SessionManager();
+	//sessionManager->SetRemoteNetworkView(rnView);
 	sessionManager->VOnInit();
 
 	bool listen = true;
