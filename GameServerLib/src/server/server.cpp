@@ -621,9 +621,12 @@ void RemoteEventSocket::VHandleInput(){
 					{
 						pEvent->VDeserialize(in);
 						pEvent->VSetIp(NetSocket::GetIpAddress()); //used to create unique ActorId and so Unity can call by name without knowing the ActorId 
+						printf("POST :Server add socket %d to event\n", NetSocket::GetSockId());
+						pEvent->VSetSocketId(NetSocket::GetSockId());
 						printf("%ld\n",pEvent->VGetEventType());
 						IEventManager::Get()->VTriggerEvent(pEvent);
-						SendHttpResponse(http_response_code_t::CREATED);
+						// Response must be sent by Event because we don't know at this point if it will succeed or failed
+						//SendHttpResponse(http_response_code_t::CREATED);
 					}
 					else
 					{						
@@ -653,7 +656,7 @@ void RemoteEventSocket::VHandleInput(){
 					{
 						pEvent->VDeserialize(in);
 						pEvent->VSetIp(NetSocket::GetIpAddress()); 
-						printf("Server add socket %d to event\n", NetSocket::GetSockId());
+						printf("GET :Server add socket %d to event\n", NetSocket::GetSockId());
 						pEvent->VSetSocketId(NetSocket::GetSockId());
 						printf("%ld\n", pEvent->VGetEventType());
 						IEventManager::Get()->VTriggerEvent(pEvent); 
